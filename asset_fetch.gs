@@ -307,30 +307,30 @@ function FetchFuture() {
 function APIKEY(name) {
   var person = name
   if (name == "Sepehr") {
-    //var key = '7JoWe8FM0s2j3OoMX7s9WrUsUApRVGPlIWwrIal8Maze5vcygBfJMGtEe8FOXqcd'; // old (no future)
-    //var secret = 'c1nmy1SLoAFj2mvvFOdbINVJ8s5M06vCym547xAyPtsTPoBU5dRvTZUmfT3ZXoG2'; // old (no future)
-    var key = 'Mo2HdSjq0i9DCENfPLip931X700UdWetqtIjXw520judLBMJn3I2KTKmUbCHOWLz'; // future)
-    var secret = 'jOc8tDiyVBRT93PIxIDUmDSRlDRctFOgajMenBxG2a3KYFpO5JKnzmRaJyXDWLj4'; // future)
+    //var key = '*********************************************************8FOXqcd'; // old (no future)
+    //var secret = '*********************************************************3ZXoG2'; // old (no future)
+    var key = '*********************************************************bCHOWLz'; // future)
+    var secret = '*********************************************************aJyXDWLj4'; // future)
               
   } else if (name == "Dara"){
-    var key = 'tYD2siTcIkMeu6LE3KNoADUPopOhKwUAgWzgaTx9MmCQKHk9UZZMT89jm8DlfJSp'; // Please input your key.
-    var secret = '4ba0KZEeqOpIO8nAct7ShJwvx0k9QVyMdqDTPuf7AfQWWqp4tIcFsNN7fwKuhlbj'; // Please input your secret.
+    var key = '*********************************************************8DlfJSp'; // Please input your key.
+    var secret = '*********************************************************7fwKuhlbj'; // Please input your secret.
      
   } else if (name == "Farid"){
-    var key = 'KbsotR2e4wcS5Kgk5eJjghsqhm0VpXaE1oLArc9LriJdSWGV6yiXTw3tGRu8i0LQ'; // Please input your key.
-    var secret = 'EVTGLdaN3xwYaZyLGmIMEWlOfeC6f4oDYoTsQX30kDY493l40Wm1UH5fW2waA4Lp'; // Please input your secret.
+    var key = '*********************************************************Ru8i0LQ'; // Please input your key.
+    var secret = '*********************************************************5fW2waA4Lp'; // Please input your secret.
      
   } else if (name == "Saman"){
-    var key = 'pCA3P3aeC3kbPUQyVNwLOTatZISBG9H3kUnyAsfoOybAZ7C57FQm1WCkrqt8tNFx'; // Please input your key.
-    var secret = 'V3YpEKl1DkmDWiXR6DMK5rR0tyO2NYe7xxU8bnioFswhHbsgNaavxcKnXM9RqhmY'; // Please input your secret.
+    var key = '*********************************************************rqt8tNFx'; // Please input your key.
+    var secret = '*********************************************************nXM9RqhmY'; // Please input your secret.
        
   } else if (name == "Faezeh"){
-    var key = 'PYtvX7mVVCcMK5oHEVVdQvvCO3lClkrqYpyMxPMB5XZmVZdG0WBtlUYRqVBTXl8c'; // Please input your key.
-    var secret = 'qdRu71waWNRPWUHAXfujR863kl6pLw1YC7Yx4IHhXYmuuaOxRgKlvxsWAyDlpv8f'; // Please input your secret.
+    var key = '*********************************************************qVBTXl8c'; // Please input your key.
+    var secret = '*********************************************************WAyDlpv8f'; // Please input your secret.
      
   } else if (name == "Shirin"){
-    var key = 'clUfkYSjLMwcYG4rTdoZJ1DDGZyybvIDBuDY8zpuC6gOGURZUHCPGsLkdp7Eaywj'; // Please input your key.
-    var secret = 'iHQxEmxZP4EKG9OyBLbd9NuCNPyI5ylgBX67tlZ65FgsSDSKphWLLgijBUfK28Uf'; // Please input your secret.
+    var key = '*********************************************************dp7Eaywj'; // Please input your key.
+    var secret = '*********************************************************UfK28Uf'; // Please input your secret.
   }    
       
   return [key,secret]
