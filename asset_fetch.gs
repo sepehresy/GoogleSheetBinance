@@ -1,387 +1,362 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2578
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red20\green67\blue174;\red255\green255\blue254;\red46\green49\blue51;
-\red24\green25\blue27;\red162\green0\blue16;\red77\green80\blue85;\red186\green6\blue115;\red18\green115\blue126;
-}
-{\*\expandedcolortbl;;\cssrgb\c9412\c35294\c73725;\cssrgb\c100000\c100000\c99608;\cssrgb\c23529\c25098\c26275;
-\cssrgb\c12549\c12941\c14118;\cssrgb\c70196\c7843\c7059;\cssrgb\c37255\c38824\c40784;\cssrgb\c78824\c15294\c52549;\cssrgb\c3529\c52157\c56863;
-}
-\margl1440\margr1440\vieww37900\viewh19680\viewkind0
-\deftab720
-\pard\pardeftab720\sl400\partightenfactor0
+var name_list = ["Sepehr","Dara", "Farid" , "Saman", "Faezeh", "Shirin"] 
+//var name_list = ["Saman"] 
+//var name_list = ["Sepehr"] 
+var baseUrl = "https://api.binance.com";
+var baseUrl1 = "https://api1.binance.com";
+var baseUrl2 = "https://api2.binance.com";
+var baseUrl3 = "https://api3.binance.com";
+var baseUrl_future = "https://fapi.binance.com"
+var url = baseUrl
+//FetchAssets()
 
-\f0\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
-var\cf4  \cf5 name_list\cf4  = [\cf6 "Sepehr"\cf4 ,\cf6 "Dara"\cf4 , \cf6 "Farid"\cf4  , \cf6 "Saman"\cf4 , \cf6 "Faezeh"\cf4 , \cf6 "Shirin"\cf4 ] \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf7 \cb3 //var name_list = ["Saman"] \cf4 \cb1 \
-\cf7 \cb3 //var name_list = ["Sepehr"] \cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf2 \cb3 var\cf4  \cf5 baseUrl\cf4  = \cf6 "https://api.binance.com"\cf4 ;\cb1 \
-\cf2 \cb3 var\cf4  \cf5 baseUrl1\cf4  = \cf6 "https://api1.binance.com"\cf4 ;\cb1 \
-\cf2 \cb3 var\cf4  \cf5 baseUrl2\cf4  = \cf6 "https://api2.binance.com"\cf4 ;\cb1 \
-\cf2 \cb3 var\cf4  \cf5 baseUrl3\cf4  = \cf6 "https://api3.binance.com"\cf4 ;\cb1 \
-\cf2 \cb3 var\cf4  \cf5 baseUrl_future\cf4  = \cf6 "https://fapi.binance.com"\cf4 \cb1 \
-\cf2 \cb3 var\cf4  \cf5 url\cf4  = \cf5 baseUrl\cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf7 \cb3 //FetchAssets()\cf4 \cb1 \
-\
-\
-\pard\pardeftab720\sl400\partightenfactor0
-\cf2 \cb3 function\cf4  \cf8 FetchAssets\cf4 () \{\cb1 \
-\cb3   \cf8 SpreadsheetApp\cf4 .\cf5 getActive\cf4 ()\cb1 \
-\cb3     .\cf5 getRange\cf4 (\cf6 'Accounts Summary!A10:A15'\cf4 ).\cf5 setValue\cf4 (\cf6 "False"\cf4 );\cb1 \
-\cb3   \cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "Function FetchAssets is running : ........ "\cf4  )\cb1 \
-\cb3   \cf2 var\cf4  \cf5 api\cf4  = \cf6 "/api/v3/account"\cf4  ;\cb1 \
-\
-\cb3   \cf2 for\cf4 (\cf2 let\cf4  \cf5 i\cf4  = \cf9 0\cf4 ; \cf5 i\cf4  < \cf5 name_list\cf4 .\cf5 length\cf4 ; \cf5 i\cf4 ++)\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 person\cf4  = \cf5 name_list\cf4 [\cf5 i\cf4 ]\cb1 \
-\cb3     \cf8 Logger\cf4 .\cf5 log\cf4 (\cf5 person\cf4 )\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 0\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 1\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 timestamp\cf4  = \cf8 Number\cf4 (\cf2 new\cf4  \cf8 Date\cf4 ().\cf5 getTime\cf4 ()).\cf5 toFixed\cf4 (\cf9 0\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 string\cf4  = \cf6 "timestamp="\cf4  + \cf5 timestamp\cf4 ;\cb1 \
-\cb3     \cf2 var\cf4  \cf5 signature\cf4  = \cf8 Utilities\cf4 .\cf5 computeHmacSha256Signature\cf4 (\cf5 string\cf4 , \cf5 secret\cf4 );\cb1 \
-\cb3     \cf5 signature\cf4  = \cf5 signature\cf4 .\cf5 map\cf4 (\cf2 function\cf4 (\cf5 e\cf4 ) \{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 v\cf4  = (\cf5 e\cf4  < \cf9 0\cf4  ? \cf5 e\cf4  + \cf9 256\cf4  : \cf5 e\cf4 ).\cf5 toString\cf4 (\cf9 16\cf4 );\cb1 \
-\cb3         \cf2 return\cf4  \cf5 v\cf4 .\cf5 length\cf4  == \cf9 1\cf4  ? \cf6 "0"\cf4  + \cf5 v\cf4  : \cf5 v\cf4 ;\cb1 \
-\cb3     \}).\cf5 join\cf4 (\cf6 ""\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 query\cf4  = \cf6 "?"\cf4  + \cf5 string\cf4  + \cf6 "&signature="\cf4  + \cf5 signature\cf4 ;\cb1 \
-\cb3     \cf2 var\cf4  \cf5 params\cf4  = \{\cb1 \
-\cb3         \cf6 'method'\cf4 : \cf6 'get'\cf4 ,\cb1 \
-\cb3         \cf6 'headers'\cf4 : \{\cf6 'X-MBX-APIKEY'\cf4 : \cf5 key\cf4 \},\cb1 \
-\cb3         \cf6 'muteHttpExceptions'\cf4 : \cf2 true\cf4 ,\cb1 \
-\cb3     \};\cb1 \
-\cb3     \cf2 var\cf4  \cf5 dataa\cf4  = \cf8 UrlFetchApp\cf4 .\cf5 fetch\cf4 (\cf5 baseUrl\cf4  + \cf5 api\cf4  + \cf5 query\cf4 , \cf5 params\cf4 );\cb1 \
-\cb3     \cf8 Utilities\cf4 .\cf5 sleep\cf4 (\cf9 500\cf4 )\cb1 \
-\cb3     \cf7 //Logger.log( i + ")  :  " person +  "   -->    " + dataa.getContentText())\cf4 \cb1 \
-\cb3     \cb1 \
-\cb3     \cf5 ii\cf4  = \cf9 0\cf4 \cb1 \
-\cb3    \cb1 \
-\cb3     \cf2 var\cf4  \cf5 sucess\cf4  = \cf9 1\cf4 \cb1 \
-\cb3     \cf2 while\cf4  (!(\cf5 dataa\cf4 .\cf5 getContentText\cf4 ()).\cf5 includes\cf4 (\cf6 '"asset":"BTC"'\cf4 )) \{\cb1 \
-\cb3       \cf5 ii\cf4 ++;\cb1 \
-\cb3       \cf2 if\cf4  (\cf5 ii\cf4  > \cf9 10\cf4 )\{\cb1 \
-\cb3         \cf2 break\cf4 \cb1 \
-\cb3       \}\cb1 \
-\cb3       \cb1 \
-\cb3       \cf2 if\cf4  (\cf5 ii\cf4  > \cf9 8\cf4 )\{\cb1 \
-\cb3         \cf5 url\cf4  = \cf5 baseUrl1\cf4 \cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 ii\cf4  > \cf9 5\cf4 )\{\cb1 \
-\cb3         \cf5 url\cf4  = \cf5 baseUrl2\cf4 \cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 ii\cf4  > \cf9 2\cf4 )\{\cb1 \
-\cb3         \cf5 url\cf4  = \cf5 baseUrl3\cf4 \cb1 \
-\cb3       \} \cf2 else\cf4  \{\cb1 \
-\cb3         \cf5 url\cf4  = \cf5 baseUrl\cf4 \cb1 \
-\cb3       \}\cb1 \
-\cb3       \cb1 \
-\cb3       \cf8 Utilities\cf4 .\cf5 sleep\cf4 (\cf9 1000\cf4 )\cb1 \
-\cb3       \cf2 var\cf4  \cf5 timestamp\cf4  = \cf8 Number\cf4 (\cf2 new\cf4  \cf8 Date\cf4 ().\cf5 getTime\cf4 ()).\cf5 toFixed\cf4 (\cf9 0\cf4 );\cb1 \
-\cb3       \cf2 var\cf4  \cf5 string\cf4  = \cf6 "timestamp="\cf4  + \cf5 timestamp\cf4 ;\cb1 \
-\cb3       \cf2 var\cf4  \cf5 signature\cf4  = \cf8 Utilities\cf4 .\cf5 computeHmacSha256Signature\cf4 (\cf5 string\cf4 , \cf5 secret\cf4 );\cb1 \
-\cb3       \cf5 signature\cf4  = \cf5 signature\cf4 .\cf5 map\cf4 (\cf2 function\cf4 (\cf5 e\cf4 ) \{\cb1 \
-\cb3           \cf2 var\cf4  \cf5 v\cf4  = (\cf5 e\cf4  < \cf9 0\cf4  ? \cf5 e\cf4  + \cf9 256\cf4  : \cf5 e\cf4 ).\cf5 toString\cf4 (\cf9 16\cf4 );\cb1 \
-\cb3           \cf2 return\cf4  \cf5 v\cf4 .\cf5 length\cf4  == \cf9 1\cf4  ? \cf6 "0"\cf4  + \cf5 v\cf4  : \cf5 v\cf4 ;\cb1 \
-\cb3       \}).\cf5 join\cf4 (\cf6 ""\cf4 );\cb1 \
-\cb3       \cf2 var\cf4  \cf5 query\cf4  = \cf6 "?"\cf4  + \cf5 string\cf4  + \cf6 "&signature="\cf4  + \cf5 signature\cf4 ;\cb1 \
-\cb3       \cf2 var\cf4  \cf5 params\cf4  = \{\cb1 \
-\cb3           \cf6 'method'\cf4 : \cf6 'get'\cf4 ,\cb1 \
-\cb3           \cf6 'headers'\cf4 : \{\cf6 'X-MBX-APIKEY'\cf4 : \cf5 key\cf4 \},\cb1 \
-\cb3           \cf6 'muteHttpExceptions'\cf4 : \cf2 true\cf4 ,\cb1 \
-\cb3       \};\cb1 \
-\cb3       \cb1 \
-\
-\cb3       \cf2 var\cf4  \cf5 dataa\cf4  = \cf8 UrlFetchApp\cf4 .\cf5 fetch\cf4 (\cf5 url\cf4  + \cf5 api\cf4  + \cf5 query\cf4 , \cf5 params\cf4 );\cb1 \
-\cb3       \cb1 \
-\cb3       \cf8 Logger\cf4 .\cf5 log\cf4 (\cf5 ii\cf4  + \cf6 "  --> "\cf4  + \cf5 dataa\cf4 .\cf5 getContentText\cf4 ())\cb1 \
-\cb3       \cb1 \
-\cb3       \cf2 if\cf4  (!(\cf5 dataa\cf4 .\cf5 getContentText\cf4 ()).\cf5 includes\cf4 (\cf6 '"asset":"BTC"'\cf4 )) \{\cb1 \
-\cb3         \cf5 sucess\cf4  = \cf9 0\cf4 \cb1 \
-\cb3       \}\cf2 else\cf4 \{\cb1 \
-\cb3         \cf5 sucess\cf4  = \cf9 1\cf4 \cb1 \
-\cb3       \}\cb1 \
-\cb3       \cb1 \
-\cb3     \}\cb1 \
-\cb3     \cb1 \
-\cb3     \cf2 if\cf4  (\cf5 sucess\cf4  = \cf9 1\cf4 ) \{\cb1 \
-\cb3       \cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "success = "\cf4  + \cf5 sucess\cf4 )\cb1 \
-\cb3       \cf5 toast\cf4  (\cf5 ii\cf4  + \cf6 " _ "\cf4  + \cf5 sucess\cf4  + \cf6 " \\n "\cf4  + \cf5 url\cf4  , \cf5 person\cf4  )\cb1 \
-\cb3       \cf2 var\cf4  \cf5 w\cf4  = \cf8 JSON\cf4 .\cf5 parse\cf4 (\cf5 dataa\cf4 .\cf5 getContentText\cf4 ());\cb1 \
-\cb3       \cf8 Utilities\cf4 .\cf5 sleep\cf4 (\cf9 1000\cf4 )\cb1 \
-\cb3       \cf2 var\cf4  \cf5 genData\cf4  = \cf5 w\cf4 .\cf5 balances\cf4 ;\cb1 \
-\cb3       \cf2 var\cf4  \cf5 sheet\cf4  = \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf5 person\cf4 );\cb1 \
-\cb3       \cf2 var\cf4  \cf5 date\cf4  = \cf2 new\cf4  \cf8 Date\cf4 ();\cb1 \
-\cb3       \cf2 var\cf4  \cf5 cell\cf4  = \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "O1"\cf4 );\cb1 \
-\cb3       \cf5 cell\cf4 .\cf5 setValue\cf4 (\cf5 date\cf4 );\cb1 \
-\cb3       \cf2 let\cf4  \cf5 values\cf4  = [];  \cf7 // Added\cf4 \cb1 \
-\cb3       \cf2 var\cf4  \cf5 range\cf4  = \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L10:M12"\cf4 );\cb1 \
-\cb3       \cf2 var\cf4  \cf5 cell\cf4  = \cf5 range\cf4 .\cf5 getCell\cf4 (\cf9 1\cf4 , \cf9 1\cf4 );\cb1 \
-\cb3       \cf2 if\cf4  (\cf5 cell\cf4 .\cf5 getValue\cf4 ())\{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 rangesToClear\cf4  = [\cf6 "N2:N19"\cf4 , \cf6 "O2:O19"\cf4 ];        \cf7 // enter all range references here\cf4 \cb1 \
-\cb3         \cf2 for\cf4  (\cf2 var\cf4  \cf5 iii\cf4  = \cf9 0\cf4 ; \cf5 iii\cf4  < \cf5 rangesToClear\cf4 .\cf5 length\cf4 ; \cf5 iii\cf4 ++)\{\cb1 \
-\cb3           \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf5 rangesToClear\cf4 [\cf5 iii\cf4 ]).\cf5 clearContent\cf4 ();\cb1 \
-\cb3         \}\cb1 \
-\cb3       \}\cb1 \
-\
-\cb3       \cf2 for\cf4  (\cf2 var\cf4  \cf5 iiii\cf4  \cf2 in\cf4  \cf5 genData\cf4 ) \{     \cb1 \
-\cb3         \cf2 var\cf4  \cf5 freemoney\cf4  =  \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 free\cf4 )\cb1 \
-\cb3         \cf2 var\cf4  \cf5 lockedmoney\cf4  =  \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 locked\cf4 )\cb1 \
-\cb3         \cf2 var\cf4  \cf5 totalmoney\cf4  = \cf5 freemoney\cf4  + \cf5 lockedmoney\cf4 \cb1 \
-\cb3         \cb1 \
-\cb3         \cb1 \
-\cb3         \cf2 if\cf4  (((\cf5 totalmoney\cf4 ) > \cf9 0\cf4 ) || (\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 asset\cf4  == \cf6 "USDT"\cf4 ))\{\cb1 \
-\cb3           \cf8 Logger\cf4 .\cf5 log\cf4 (\cf5 person\cf4  + \cf6 "  "\cf4   + \cf5 iiii\cf4  + \cf6 "  "\cf4  + \cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 asset\cf4  + \cf6 "  "\cf4  + \cf5 totalmoney\cf4 )\cb1 \
-\cb3           \cf5 values\cf4 .\cf5 push\cf4 ([\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 asset\cf4 , \cf5 totalmoney\cf4 ]);\cb1 \
-\cb3           \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "N2:O"\cf4  + (\cf5 values\cf4 .\cf5 length\cf4  + \cf9 1\cf4 )).\cf5 setValues\cf4 (\cf5 values\cf4 );  \cf7 // Added\cf4 \cb1 \
-\cb3           \cb1 \
-\cb3           \cf2 if\cf4  (\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 asset\cf4  == \cf6 "BTC"\cf4 )\{\cb1 \
-\cb3             \cf2 var\cf4  \cf5 cell\cf4  = \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L7"\cf4 );\cb1 \
-\cb3             \cf5 cell\cf4 .\cf5 setValue\cf4 (\cf5 totalmoney\cf4 );\cb1 \
-\cb3           \}\cb1 \
-\cb3           \cb1 \
-\cb3           \cf2 if\cf4  (\cf5 genData\cf4 [\cf5 iiii\cf4 ].\cf5 asset\cf4  == \cf6 "USDT"\cf4 )\{\cb1 \
-\cb3             \cf2 var\cf4  \cf5 cell\cf4  = \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L6"\cf4 );\cb1 \
-\cb3             \cf5 cell\cf4 .\cf5 setValue\cf4 (\cf5 totalmoney\cf4 );\cb1 \
-\cb3           \}\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cb1 \
-\cb3       \}\cb1 \
-\cb3       \cf2 var\cf4  \cf5 sheet\cf4  = \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 );\cb1 \
-\cb3       \cb1 \
-\cb3       \cf2 if\cf4  (\cf5 person\cf4  == \cf6 "Dara"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A10"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 person\cf4  ==\cf6 "Farid"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A11"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 person\cf4  == \cf6 "Sepehr"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A12"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 person\cf4  == \cf6 "Shirin"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A13"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 person\cf4  == \cf6 "Faezeh"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A14"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 person\cf4  == \cf6 "Saman"\cf4 )\{\cb1 \
-\cb3         \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf6 "Accounts Summary"\cf4 ).\cf5 getRange\cf4 (\cf6 "A15"\cf4 ).\cf5 setValue\cf4 (\cf6 "True"\cf4 );\cb1 \
-\cb3       \} \cb1 \
-\cb3   \cb1 \
-\cb3         \cb1 \
-\cb3         \cb1 \
-\cb3         \cb1 \
-\cb3     \}\cb1 \
-\cb3         \cb1 \
-\
-\cb3   \}\cb1 \
-\cb3 \}\cb1 \
-\
-\
-\cf2 \cb3 function\cf4  \cf8 DailySnapshot\cf4 () \{\cb1 \
-\cb3   \cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "Function DailySnapshot is running : ........ "\cf4  )\cb1 \
-\cb3   \cf2 var\cf4  \cf5 api\cf4  = \cf6 "/sapi/v1/accountSnapshot"\cf4 ; \cf7 // Please input API Endpoint you want.\cf4 \cb1 \
-\cb3   \cf2 for\cf4 (\cf2 let\cf4  \cf5 i\cf4  = \cf9 0\cf4 ; \cf5 i\cf4  < \cf5 name_list\cf4 .\cf5 length\cf4 ; \cf5 i\cf4 ++)\{ \cb1 \
-\cb3           \cb1 \
-\cb3     \cf2 var\cf4  \cf5 person\cf4  = \cf5 name_list\cf4 [\cf5 i\cf4 ]\cb1 \
-\cb3     \cf2 var\cf4  \cf5 timestamp\cf4  = \cf8 Number\cf4 (\cf2 new\cf4  \cf8 Date\cf4 ().\cf5 getTime\cf4 ()).\cf5 toFixed\cf4 (\cf9 0\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 string\cf4  = \cf6 "type=SPOT&timestamp="\cf4  + \cf5 timestamp\cf4 ; \cf7 // Please input query parameters for the inputterd API.\cf4 \cb1 \
-\cb3     \cf7 //Logger.log(person)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 0\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 1\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 signature\cf4  = \cf8 Utilities\cf4 .\cf5 computeHmacSha256Signature\cf4 (\cf5 string\cf4 , \cf5 secret\cf4 );\cb1 \
-\cb3     \cf5 signature\cf4  = \cf5 signature\cf4 .\cf5 map\cf4 (\cf2 function\cf4 (\cf5 e\cf4 ) \{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 v\cf4  = (\cf5 e\cf4  < \cf9 0\cf4  ? \cf5 e\cf4  + \cf9 256\cf4  : \cf5 e\cf4 ).\cf5 toString\cf4 (\cf9 16\cf4 );\cb1 \
-\cb3         \cf2 return\cf4  \cf5 v\cf4 .\cf5 length\cf4  == \cf9 1\cf4  ? \cf6 "0"\cf4  + \cf5 v\cf4  : \cf5 v\cf4 ;\cb1 \
-\cb3     \}).\cf5 join\cf4 (\cf6 ""\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 query\cf4  = \cf6 "?"\cf4  + \cf5 string\cf4  + \cf6 "&signature="\cf4  + \cf5 signature\cf4 ;\cb1 \
-\cb3     \cf2 var\cf4  \cf5 params\cf4  = \{\cb1 \
-\cb3         \cf6 'method'\cf4 : \cf6 'get'\cf4 ,\cb1 \
-\cb3         \cf6 'headers'\cf4 : \{\cf6 'X-MBX-APIKEY'\cf4 : \cf5 key\cf4 \},\cb1 \
-\cb3         \cf6 'muteHttpExceptions'\cf4 : \cf2 true\cf4 ,\cb1 \
-\cb3     \};\cb1 \
-\cb3     \cf7 //Utilities.sleep(500)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 dataa\cf4  = \cf8 UrlFetchApp\cf4 .\cf5 fetch\cf4 (\cf5 baseUrl\cf4  + \cf5 api\cf4  + \cf5 query\cf4 , \cf5 params\cf4 );\cb1 \
-\cb3     \cf7 //Utilities.sleep(500)\cf4 \cb1 \
-\cb3     \cf7 //Logger.log(person + " - daily snapshot -> " + dataa.getContentText())\cf4 \cb1 \
-\cb3     \cf5 num\cf4  = \cf9 0\cf4 \cb1 \
-\cb3     \cf7 /*\cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf7 \cb3     while ((dataa.getContentText()) == "")  \{\cf4 \cb1 \
-\cf7 \cb3             num++;\cf4 \cb1 \
-\cf7 \cb3             var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);\cf4 \cb1 \
-\cf7 \cb3             Utilities.sleep(2000)\cf4 \cb1 \
-\cf7 \cb3             Logger.log(num, "  --> " , dataa.getContentText())\cf4 \cb1 \
-\cf7 \cb3     \}\cf4 \cb1 \
-\cf7 \cb3     */\cf4 \cb1 \
-\
-\pard\pardeftab720\sl400\partightenfactor0
-\cf4 \cb3     \cf2 var\cf4  \cf5 w\cf4  = \cf8 JSON\cf4 .\cf5 parse\cf4 (\cf5 dataa\cf4 .\cf5 getContentText\cf4 ());\cb1 \
-\cb3     \cf2 var\cf4  \cf5 genData\cf4  = \cf5 w\cf4 .\cf5 snapshotVos\cf4 ;\cb1 \
-\cb3     \cf2 var\cf4  \cf5 totalavalableUSDT\cf4  = \cf9 0\cf4 \cb1 \
-\cb3     \cf7 //Logger.log(genData)\cf4 \cb1 \
-\
-\cb3     \cf2 var\cf4  \cf5 howmanydata\cf4  = \cf8 Number\cf4 (\cf5 genData\cf4 .\cf5 length\cf4 ) - \cf9 1\cf4 \cb1 \
-\cb3     \cf7 //Utilities.sleep(1000)\cf4 \cb1 \
-\cb3     \cf7 //Logger.log(howmanydata)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 totalfreebtc\cf4  = \cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 totalAssetOfBtc\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 totalAssetOfBtcs\cf4  = \cf8 Number\cf4 (\cf5 totalfreebtc\cf4 )\cb1 \
-\cb3     \cb1 \
-\cb3     \cf2 for\cf4  (\cf2 var\cf4  \cf5 j\cf4  \cf2 in\cf4  \cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 )\{    \cb1 \
-\cb3       \cf2 var\cf4  \cf5 assets\cf4  = \cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 [\cf5 j\cf4 ].\cf5 asset\cf4 \cb1 \
-\cb3       \cb1 \
-\cb3       \cf2 if\cf4  (\cf5 assets\cf4  == \cf6 "BTC"\cf4 ) \{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 lockeds\cf4  = \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 [\cf5 j\cf4 ].\cf5 locked\cf4 )\cb1 \
-\cb3         \cf2 var\cf4  \cf5 totalLocked\cf4  = \cf5 lockeds\cf4 \cb1 \
-\cb3         \cf5 totalAssetOfBtcs\cf4  = \cf5 totalLocked\cf4  + \cf5 totalAssetOfBtcs\cf4 \cb1 \
-\
-\cb3       \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 assets\cf4  == \cf6 "USDT"\cf4 )\{\cb1 \
-\cb3         \cf7 //Logger.log("Dara total BTC = " + assets + CRYPTOFINANCE("BINANCE:" +"BTC/USD"))\cf4 \cb1 \
-\cb3         \cf2 var\cf4  \cf8 BTC\cf4  = \cf8 Number\cf4 (\cf8 CRYPTOFINANCE\cf4 (\cf6 "BINANCE:"\cf4  +\cf6 "BTC/USD"\cf4 ))\cb1 \
-\cb3         \cf2 var\cf4  \cf8 USDT\cf4  = \cf9 1\cf4 /\cf8 BTC\cf4 \cb1 \
-\cb3         \cf2 var\cf4  \cf5 frees\cf4  = \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 [\cf5 j\cf4 ].\cf5 free\cf4 )\cb1 \
-\cb3         \cf2 var\cf4  \cf5 lockeds\cf4  = \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 [\cf5 j\cf4 ].\cf5 locked\cf4 )\cb1 \
-\cb3         \cf5 totalavalableUSDT\cf4  = \cf5 frees\cf4  + \cf5 lockeds\cf4 \cb1 \
-\cb3         \cf5 totalLocked\cf4  = \cf5 lockeds\cf4  * \cf8 USDT\cf4 \cb1 \
-\cb3         \cf5 totalAssetOfBtcs\cf4  = \cf5 totalLocked\cf4  + \cf5 totalAssetOfBtcs\cf4 \cb1 \
-\cb3         \cf7 //log(assets + totalAssetOfBtcs)\cf4 \cb1 \
-\
-\cb3       \} \cf2 else\cf4  \{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 lockeds\cf4  = \cf8 Number\cf4 (\cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 data\cf4 .\cf5 balances\cf4 [\cf5 j\cf4 ].\cf5 locked\cf4 )\cb1 \
-\cb3         \cf2 var\cf4  \cf5 totalLocked\cf4  = \cf8 Number\cf4 (\cf8 CRYPTOFINANCE\cf4 (\cf6 "BINANCE:"\cf4  + \cf5 assets\cf4  +\cf6 "/BTC"\cf4 )) * \cf5 lockeds\cf4 \cb1 \
-\cb3         \cf5 totalAssetOfBtcs\cf4  = \cf5 totalLocked\cf4  + \cf5 totalAssetOfBtcs\cf4 \cb1 \
-\cb3       \}\cb1 \
-\cb3       \cb1 \
-\cb3     \}\cb1 \
-\cb3     \cf8 Logger\cf4 .\cf5 log\cf4 ( \cf5 person\cf4  + \cf6 "  total BTC = "\cf4  + \cf5 totalAssetOfBtcs\cf4 )\cb1 \
-\cb3     \cf2 var\cf4  \cf5 sheet\cf4  = \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf5 person\cf4 +\cf6 "(dont-touch)"\cf4 );\cb1 \
-\cb3     \cf7 //var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Dara(dont-touch)");\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 date\cf4  = \cf2 new\cf4  \cf8 Date\cf4 ();\cb1 \
-\cb3     \cf5 sheet\cf4 .\cf5 appendRow\cf4 ([\cf5 date\cf4 , \cf5 genData\cf4 [\cf5 howmanydata\cf4 ].\cf5 updateTime\cf4 , \cf5 totalAssetOfBtcs\cf4 , \cf5 totalavalableUSDT\cf4 ])\cb1 \
-\cb3   \}\cb1 \
-\cb3 \}\cb1 \
-\
-\
-\cf2 \cb3 function\cf4  \cf8 FetchFuture\cf4 () \{\cb1 \
-\cb3   \cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "Function FetchFuture is running : ........ "\cf4  )\cb1 \
-\cb3   \cf2 var\cf4  \cf5 api\cf4  = \cf6 "/fapi/v2/balance"\cf4  ;\cb1 \
-\cb3   \cf7 //var api = "/api/v3/account" ;\cf4 \cb1 \
-\
-\cb3   \cf2 for\cf4 (\cf2 let\cf4  \cf5 i\cf4  = \cf9 0\cf4 ; \cf5 i\cf4  < \cf5 name_list\cf4 .\cf5 length\cf4 ; \cf5 i\cf4 ++)\{ \cb1 \
-\cb3           \cb1 \
-\cb3     \cf2 var\cf4  \cf5 person\cf4  = \cf5 name_list\cf4 [\cf5 i\cf4 ]\cb1 \
-\cb3     \cf7 //var person = "sepehr"\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 timestamp\cf4  = \cf8 Number\cf4 (\cf2 new\cf4  \cf8 Date\cf4 ().\cf5 getTime\cf4 ()).\cf5 toFixed\cf4 (\cf9 0\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 string\cf4  = \cf6 "timestamp="\cf4  + \cf5 timestamp\cf4 ;\cb1 \
-\cb3     \cf7 //Logger.log(i +  person)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 0\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf8 APIKEY\cf4 (\cf5 person\cf4 )[\cf9 1\cf4 ];\cb1 \
-\cb3     \cf2 var\cf4  \cf5 signature\cf4  = \cf8 Utilities\cf4 .\cf5 computeHmacSha256Signature\cf4 (\cf5 string\cf4 , \cf5 secret\cf4 );\cb1 \
-\cb3     \cf5 signature\cf4  = \cf5 signature\cf4 .\cf5 map\cf4 (\cf2 function\cf4 (\cf5 e\cf4 ) \{\cb1 \
-\cb3         \cf2 var\cf4  \cf5 v\cf4  = (\cf5 e\cf4  < \cf9 0\cf4  ? \cf5 e\cf4  + \cf9 256\cf4  : \cf5 e\cf4 ).\cf5 toString\cf4 (\cf9 16\cf4 );\cb1 \
-\cb3         \cf2 return\cf4  \cf5 v\cf4 .\cf5 length\cf4  == \cf9 1\cf4  ? \cf6 "0"\cf4  + \cf5 v\cf4  : \cf5 v\cf4 ;\cb1 \
-\cb3     \}).\cf5 join\cf4 (\cf6 ""\cf4 );\cb1 \
-\cb3     \cf2 var\cf4  \cf5 query\cf4  = \cf6 "?"\cf4  + \cf5 string\cf4  + \cf6 "&signature="\cf4  + \cf5 signature\cf4 ;\cb1 \
-\cb3     \cf2 var\cf4  \cf5 params\cf4  = \{\cb1 \
-\cb3         \cf6 'method'\cf4 : \cf6 'get'\cf4 ,\cb1 \
-\cb3         \cf6 'headers'\cf4 : \{\cf6 'X-MBX-APIKEY'\cf4 : \cf5 key\cf4 \},\cb1 \
-\cb3         \cf6 'muteHttpExceptions'\cf4 : \cf2 true\cf4 ,\cb1 \
-\cb3     \};\cb1 \
-\cb3     \cf2 var\cf4  \cf5 dataa\cf4  = \cf8 UrlFetchApp\cf4 .\cf5 fetch\cf4 (\cf5 baseUrl_future\cf4  + \cf5 api\cf4  + \cf5 query\cf4 , \cf5 params\cf4 );\cb1 \
-\cb3     \cb1 \
-\cb3     \cf5 ii\cf4  = \cf9 0\cf4 \cb1 \
-\cb3     \cf7 /*\cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf7 \cb3     while ((dataa.getContentText()).includes("msg")) \{\cf4 \cb1 \
-\cf7 \cb3             ii++;\cf4 \cb1 \
-\cf7 \cb3             var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);\cf4 \cb1 \
-\cf7 \cb3             Utilities.sleep(2000)\cf4 \cb1 \
-\cf7 \cb3             //Logger.log(i +  "  -msg-> "  +  dataa.getContentText())\cf4 \cb1 \
-\cf7 \cb3     \}\cf4 \cb1 \
-\cf7 \cb3     Logger.log(i+person);\cf4 \cb1 \
-\cf7 \cb3     */\cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf4 \cb3     \cf2 var\cf4  \cf5 sheet\cf4  = \cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 ().\cf5 getSheetByName\cf4 (\cf5 person\cf4 );\cb1 \
-\
-\cb3     \cf2 if\cf4  ((\cf5 dataa\cf4 .\cf5 getContentText\cf4 ()).\cf5 includes\cf4 (\cf6 "404"\cf4 )) \{\cb1 \
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L13"\cf4 ).\cf5 setValue\cf4 (\cf6 "API not future enabled"\cf4 );\cb1 \
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L14"\cf4 ).\cf5 setValue\cf4 (\cf6 "API not future enabled"\cf4 );\cb1 \
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L15"\cf4 ).\cf5 setValue\cf4 (\cf6 "API not future enabled"\cf4 );\cb1 \
-\cb3             \cb1 \
-\cb3     \} \cf2 else\cf4  \{\cb1 \
-\cb3       \cf2 var\cf4  \cf5 w\cf4  = \cf8 JSON\cf4 .\cf5 parse\cf4 (\cf5 dataa\cf4 .\cf5 getContentText\cf4 ());\cb1 \
-\cb3       \cf2 var\cf4  \cf5 balance\cf4  = \cf5 w\cf4 [\cf9 0\cf4 ].\cf5 balance\cf4 \cb1 \
-\cb3       \cf2 var\cf4  \cf5 availableBalance\cf4  = \cf5 w\cf4 [\cf9 0\cf4 ].\cf5 availableBalance\cf4 \cb1 \
-\cb3       \cf7 //var maxWithdrawAmount = w[0].maxWithdrawAmount\cf4 \cb1 \
-\cb3       \cf7 //var crossWalletBalance = w[0].crossWalletBalance\cf4 \cb1 \
-\cb3       \cf2 var\cf4  \cf5 crossUnPnl\cf4  = \cf5 w\cf4 [\cf9 0\cf4 ].\cf5 crossUnPnl\cf4 \cb1 \
-\cb3       \cf8 Logger\cf4 .\cf5 log\cf4 (\cf5 i\cf4 +\cf5 person\cf4  + \cf6 " Future Balance = "\cf4  +  \cf5 balance\cf4 );\cb1 \
-\
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L13"\cf4 ).\cf5 setValue\cf4 (\cf5 balance\cf4 );\cb1 \
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L14"\cf4 ).\cf5 setValue\cf4 (\cf5 availableBalance\cf4 );\cb1 \
-\cb3       \cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf6 "L15"\cf4 ).\cf5 setValue\cf4 (\cf5 crossUnPnl\cf4 );\cb1 \
-\cb3       \cf7 //sheet.getRange("L16").setValue(maxWithdrawAmount);\cf4 \cb1 \
-\cb3       \cf7 //sheet.getRange("L17").setValue(crossWalletBalance);\cf4 \cb1 \
-\
-\cb3     \}\cb1 \
-\cb3     \cb1 \
-\cb3     \cb1 \
-\cb3     \cb1 \
-\
-\cb3   \}\cb1 \
-\cb3 \}\cb1 \
-\
-\
-\cf2 \cb3 function\cf4  \cf8 APIKEY\cf4 (\cf5 name\cf4 ) \{\cb1 \
-\cb3   \cf2 var\cf4  \cf5 person\cf4  = \cf5 name\cf4 \cb1 \
-\cb3   \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Sepehr"\cf4 ) \{\cb1 \
-\cb3     \cf7 //var key = '\cf6 \cb3 **************************************************\cf7 \cb3 GtEe8FOXqcd'; // old (no future)\cf4 \cb1 \
-\cb3     \cf7 //var secret = '\cf6 \cb3 **************************************************\cf7 \cb3 TZUmfT3ZXoG2'; // old (no future)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 \'91**************************************************I2KTKmUbCHOWLz'\cf4 ; \cf7 // future)\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 nzmRaJyXDWLj4'\cf4 ; \cf7 // future)\cf4 \cb1 \
-\cb3               \cb1 \
-\cb3   \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Dara"\cf4 )\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 m8DlfJSp'\cf4 ; \cf7 // Please input your key.\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 N7fwKuhlbj'\cf4 ; \cf7 // Please input your secret.\cf4 \cb1 \
-\cb3      \cb1 \
-\cb3   \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Farid"\cf4 )\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 u8i0LQ'\cf4 ; \cf7 // Please input your key.\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 W2waA4Lp'\cf4 ; \cf7 // Please input your secret.\cf4 \cb1 \
-\cb3      \cb1 \
-\cb3   \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Saman"\cf4 )\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 qt8tNFx'\cf4 ; \cf7 // Please input your key.\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 M9RqhmY'\cf4 ; \cf7 // Please input your secret.\cf4 \cb1 \
-\cb3        \cb1 \
-\cb3   \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Faezeh"\cf4 )\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 RqVBTXl8c'\cf4 ; \cf7 // Please input your key.\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 AyDlpv8f'\cf4 ; \cf7 // Please input your secret.\cf4 \cb1 \
-\cb3      \cb1 \
-\cb3   \} \cf2 else\cf4  \cf2 if\cf4  (\cf5 name\cf4  == \cf6 "Shirin"\cf4 )\{\cb1 \
-\cb3     \cf2 var\cf4  \cf5 key\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 p7Eaywj'\cf4 ; \cf7 // Please input your key.\cf4 \cb1 \
-\cb3     \cf2 var\cf4  \cf5 secret\cf4  = \cf6 '\cf6 \cb3 **************************************************\cf6 \cb3 jBUfK28Uf'\cf4 ; \cf7 // Please input your secret.\cf4 \cb1 \
-\cb3   \}    \cb1 \
-\cb3       \cb1 \
-\cb3   \cf2 return\cf4  [\cf5 key\cf4 ,\cf5 secret\cf4 ]\cb1 \
-\cb3 \}\cb1 \
-\
-\
-\cf2 \cb3 function\cf4  \cf5 toast\cf4 (\cf5 body\cf4 , \cf5 title\cf4 , \cf5 timeout\cf4 ) \{\cb1 \
-\cb3   \cf2 return\cf4  \cf8 SpreadsheetApp\cf4 .\cf5 getActive\cf4 ().\cf5 toast\cf4 (\cb1 \
-\cb3     \cf5 body\cf4 ,\cb1 \
-\cb3     \cf5 title\cf4  || \cf6 "Binance to Google Sheets"\cf4 ,\cb1 \
-\cb3     \cf5 timeout\cf4  || \cf9 10\cf4  \cf7 // In seconds\cf4 \cb1 \
-\cb3   );\cb1 \
-\cb3 \}\cb1 \
-\
-\pard\pardeftab720\sl400\partightenfactor0
-\cf7 \cb3 // Let's all treat those lovely APIs with respect and don't hammer them to hard to avoid bans. This script will do \cf4 \cb1 \
-\cf7 \cb3 // one single call to Binance to fetch the tickers and dump them in the 'Binance24h' sheet.  - wkr, Moosy Research\cf4 \cb1 \
-\pard\pardeftab720\sl400\partightenfactor0
-\cf2 \cb3 function\cf4  \cf8 BINTickFetch\cf4 ()\{\cb1 \
-\cb3   \cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "Function BINTickFetch is running : ........ "\cf4  )\cb1 \
-\cb3   \cf2 var\cf4  \cf5 rows\cf4 =[],\cf5 obj_array\cf4 =\cf2 null\cf4 , \cf5 msg\cf4 =\cf6 ""\cf4 ;\cb1 \
-\cb3   \cf2 try\cf4  \{\cf5 obj_array\cf4 =\cf8 JSON\cf4 .\cf5 parse\cf4 (\cf8 UrlFetchApp\cf4 .\cf5 fetch\cf4 (\cf6 "https://api.binance.com/api/v3/ticker/price"\cf4 ).\cf5 getContentText\cf4 ());\} \cf2 catch\cf4  (\cf5 e\cf4 ) \{ \cf5 msg\cf4 =\cf5 e\cf4 ; \cf5 obj_array\cf4 =\cf2 null\cf4 ;\}\cb1 \
-\cb3   \cf2 if\cf4  (\cf5 obj_array\cf4 !=\cf2 null\cf4 )\{\cb1 \
-\cb3     \cf2 for\cf4  (\cf5 r\cf4  \cf2 in\cf4  \cf5 obj_array\cf4 ) \cf5 rows\cf4 .\cf5 push\cf4 ([\cf5 obj_array\cf4 [\cf5 r\cf4 ].\cf2 symbol\cf4 , \cf5 parseFloat\cf4 (\cf5 obj_array\cf4 [\cf5 r\cf4 ].\cf5 price\cf4 )]);\cb1 \
-\cb3     \cf2 var\cf4  \cf5 ss\cf4 =\cf8 SpreadsheetApp\cf4 .\cf5 getActiveSpreadsheet\cf4 (),\cf5 sheet\cf4 =\cf5 ss\cf4 .\cf5 getSheetByName\cf4 (\cf6 'Binance24h'\cf4 );\cf5 ss\cf4 .\cf5 getRange\cf4 (\cf6 "Binance24h!A1"\cf4 ).\cf5 setValue\cf4 (\cf2 new\cf4  \cf8 Date\cf4 ());\cb1 \
-\cb3     \cf2 try\cf4  \{\cf2 var\cf4  \cf5 range\cf4 =\cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf9 2\cf4 ,\cf9 1\cf4 ,\cf5 sheet\cf4 .\cf5 getLastRow\cf4 (),\cf9 2\cf4 ).\cf5 clearContent\cf4 ();\} \cf2 catch\cf4 (\cf5 e\cf4 ) \{\cf8 Logger\cf4 .\cf5 log\cf4 (\cf6 "error"\cf4 );\}\cb1 \
-\cb3     \cf2 if\cf4  (\cf5 rows\cf4  != \cf6 ""\cf4 ) \cf5 range\cf4 =\cf5 sheet\cf4 .\cf5 getRange\cf4 (\cf9 2\cf4 ,\cf9 1\cf4 ,\cf5 rows\cf4 .\cf5 length\cf4 ,\cf9 2\cf4 ); \cf5 range\cf4 .\cf5 setValues\cf4 (\cf5 rows\cf4 ); \cb1 \
-\cb3   \}\cb1 \
-\cb3   \cf2 if\cf4  (\cf5 msg\cf4 !=\cf6 ""\cf4 ) \cf8 Browser\cf4 .\cf5 msgBox\cf4 (\cf6 "Oops, Binance API did not provide any valid data and returned an error. \\\\n\\\\n"\cf4 +\cf5 msg\cf4 );\cb1 \
-\cb3 \}\cb1 \
-\cb3  \cb1 \
-\
+
+function FetchAssets() {
+  SpreadsheetApp.getActive()
+    .getRange('Accounts Summary!A10:A15').setValue("False");
+  Logger.log("Function FetchAssets is running : ........ " )
+  var api = "/api/v3/account" ;
+
+  for(let i = 0; i < name_list.length; i++){
+    var person = name_list[i]
+    Logger.log(person)
+    var key = APIKEY(person)[0];
+    var secret = APIKEY(person)[1];
+    var timestamp = Number(new Date().getTime()).toFixed(0);
+    var string = "timestamp=" + timestamp;
+    var signature = Utilities.computeHmacSha256Signature(string, secret);
+    signature = signature.map(function(e) {
+        var v = (e < 0 ? e + 256 : e).toString(16);
+        return v.length == 1 ? "0" + v : v;
+    }).join("");
+    var query = "?" + string + "&signature=" + signature;
+    var params = {
+        'method': 'get',
+        'headers': {'X-MBX-APIKEY': key},
+        'muteHttpExceptions': true,
+    };
+    var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);
+    Utilities.sleep(500)
+    //Logger.log( i + ")  :  " person +  "   -->    " + dataa.getContentText())
+    
+    ii = 0
+   
+    var sucess = 1
+    while (!(dataa.getContentText()).includes('"asset":"BTC"')) {
+      ii++;
+      if (ii > 10){
+        break
+      }
+      
+      if (ii > 8){
+        url = baseUrl1
+      } else if (ii > 5){
+        url = baseUrl2
+      } else if (ii > 2){
+        url = baseUrl3
+      } else {
+        url = baseUrl
+      }
+      
+      Utilities.sleep(1000)
+      var timestamp = Number(new Date().getTime()).toFixed(0);
+      var string = "timestamp=" + timestamp;
+      var signature = Utilities.computeHmacSha256Signature(string, secret);
+      signature = signature.map(function(e) {
+          var v = (e < 0 ? e + 256 : e).toString(16);
+          return v.length == 1 ? "0" + v : v;
+      }).join("");
+      var query = "?" + string + "&signature=" + signature;
+      var params = {
+          'method': 'get',
+          'headers': {'X-MBX-APIKEY': key},
+          'muteHttpExceptions': true,
+      };
+      
+
+      var dataa = UrlFetchApp.fetch(url + api + query, params);
+      
+      Logger.log(ii + "  --> " + dataa.getContentText())
+      
+      if (!(dataa.getContentText()).includes('"asset":"BTC"')) {
+        sucess = 0
+      }else{
+        sucess = 1
+      }
+      
+    }
+    
+    if (sucess = 1) {
+      Logger.log("success = " + sucess)
+      toast (ii + " _ " + sucess + " \n " + url , person )
+      var w = JSON.parse(dataa.getContentText());
+      Utilities.sleep(1000)
+      var genData = w.balances;
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(person);
+      var date = new Date();
+      var cell = sheet.getRange("O1");
+      cell.setValue(date);
+      let values = [];  // Added
+      var range = sheet.getRange("L10:M12");
+      var cell = range.getCell(1, 1);
+      if (cell.getValue()){
+        var rangesToClear = ["N2:N19", "O2:O19"];        // enter all range references here
+        for (var iii = 0; iii < rangesToClear.length; iii++){
+          sheet.getRange(rangesToClear[iii]).clearContent();
+        }
+      }
+
+      for (var iiii in genData) {     
+        var freemoney =  Number(genData[iiii].free)
+        var lockedmoney =  Number(genData[iiii].locked)
+        var totalmoney = freemoney + lockedmoney
+        
+        
+        if (((totalmoney) > 0) || (genData[iiii].asset == "USDT")){
+          Logger.log(person + "  "  + iiii + "  " + genData[iiii].asset + "  " + totalmoney)
+          values.push([genData[iiii].asset, totalmoney]);
+          sheet.getRange("N2:O" + (values.length + 1)).setValues(values);  // Added
+          
+          if (genData[iiii].asset == "BTC"){
+            var cell = sheet.getRange("L7");
+            cell.setValue(totalmoney);
+          }
+          
+          if (genData[iiii].asset == "USDT"){
+            var cell = sheet.getRange("L6");
+            cell.setValue(totalmoney);
+          }
+        }
+        
+      }
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary");
+      
+      if (person == "Dara"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A10").setValue("True");
+      } else if (person =="Farid"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A11").setValue("True");
+      } else if (person == "Sepehr"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A12").setValue("True");
+      } else if (person == "Shirin"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A13").setValue("True");
+      } else if (person == "Faezeh"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A14").setValue("True");
+      } else if (person == "Saman"){
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounts Summary").getRange("A15").setValue("True");
+      } 
+  
+        
+        
+        
+    }
+        
+
+  }
 }
+
+
+function DailySnapshot() {
+  Logger.log("Function DailySnapshot is running : ........ " )
+  var api = "/sapi/v1/accountSnapshot"; // Please input API Endpoint you want.
+  for(let i = 0; i < name_list.length; i++){ 
+          
+    var person = name_list[i]
+    var timestamp = Number(new Date().getTime()).toFixed(0);
+    var string = "type=SPOT&timestamp=" + timestamp; // Please input query parameters for the inputterd API.
+    //Logger.log(person)
+    var key = APIKEY(person)[0];
+    var secret = APIKEY(person)[1];
+    var signature = Utilities.computeHmacSha256Signature(string, secret);
+    signature = signature.map(function(e) {
+        var v = (e < 0 ? e + 256 : e).toString(16);
+        return v.length == 1 ? "0" + v : v;
+    }).join("");
+    var query = "?" + string + "&signature=" + signature;
+    var params = {
+        'method': 'get',
+        'headers': {'X-MBX-APIKEY': key},
+        'muteHttpExceptions': true,
+    };
+    //Utilities.sleep(500)
+    var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);
+    //Utilities.sleep(500)
+    //Logger.log(person + " - daily snapshot -> " + dataa.getContentText())
+    num = 0
+    /*
+    while ((dataa.getContentText()) == "")  {
+            num++;
+            var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);
+            Utilities.sleep(2000)
+            Logger.log(num, "  --> " , dataa.getContentText())
+    }
+    */
+
+    var w = JSON.parse(dataa.getContentText());
+    var genData = w.snapshotVos;
+    var totalavalableUSDT = 0
+    //Logger.log(genData)
+
+    var howmanydata = Number(genData.length) - 1
+    //Utilities.sleep(1000)
+    //Logger.log(howmanydata)
+    var totalfreebtc = genData[howmanydata].data.totalAssetOfBtc
+    var totalAssetOfBtcs = Number(totalfreebtc)
+    
+    for (var j in genData[howmanydata].data.balances){    
+      var assets = genData[howmanydata].data.balances[j].asset
+      
+      if (assets == "BTC") {
+        var lockeds = Number(genData[howmanydata].data.balances[j].locked)
+        var totalLocked = lockeds
+        totalAssetOfBtcs = totalLocked + totalAssetOfBtcs
+
+      } else if (assets == "USDT"){
+        //Logger.log("Dara total BTC = " + assets + CRYPTOFINANCE("BINANCE:" +"BTC/USD"))
+        var BTC = Number(CRYPTOFINANCE("BINANCE:" +"BTC/USD"))
+        var USDT = 1/BTC
+        var frees = Number(genData[howmanydata].data.balances[j].free)
+        var lockeds = Number(genData[howmanydata].data.balances[j].locked)
+        totalavalableUSDT = frees + lockeds
+        totalLocked = lockeds * USDT
+        totalAssetOfBtcs = totalLocked + totalAssetOfBtcs
+        //log(assets + totalAssetOfBtcs)
+
+      } else {
+        var lockeds = Number(genData[howmanydata].data.balances[j].locked)
+        var totalLocked = Number(CRYPTOFINANCE("BINANCE:" + assets +"/BTC")) * lockeds
+        totalAssetOfBtcs = totalLocked + totalAssetOfBtcs
+      }
+      
+    }
+    Logger.log( person + "  total BTC = " + totalAssetOfBtcs)
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(person+"(dont-touch)");
+    //var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Dara(dont-touch)");
+    var date = new Date();
+    sheet.appendRow([date, genData[howmanydata].updateTime, totalAssetOfBtcs, totalavalableUSDT])
+  }
+}
+
+
+function FetchFuture() {
+  Logger.log("Function FetchFuture is running : ........ " )
+  var api = "/fapi/v2/balance" ;
+  //var api = "/api/v3/account" ;
+
+  for(let i = 0; i < name_list.length; i++){ 
+          
+    var person = name_list[i]
+    //var person = "sepehr"
+    var timestamp = Number(new Date().getTime()).toFixed(0);
+    var string = "timestamp=" + timestamp;
+    //Logger.log(i +  person)
+    var key = APIKEY(person)[0];
+    var secret = APIKEY(person)[1];
+    var signature = Utilities.computeHmacSha256Signature(string, secret);
+    signature = signature.map(function(e) {
+        var v = (e < 0 ? e + 256 : e).toString(16);
+        return v.length == 1 ? "0" + v : v;
+    }).join("");
+    var query = "?" + string + "&signature=" + signature;
+    var params = {
+        'method': 'get',
+        'headers': {'X-MBX-APIKEY': key},
+        'muteHttpExceptions': true,
+    };
+    var dataa = UrlFetchApp.fetch(baseUrl_future + api + query, params);
+    
+    ii = 0
+    /*
+    while ((dataa.getContentText()).includes("msg")) {
+            ii++;
+            var dataa = UrlFetchApp.fetch(baseUrl + api + query, params);
+            Utilities.sleep(2000)
+            //Logger.log(i +  "  -msg-> "  +  dataa.getContentText())
+    }
+    Logger.log(i+person);
+    */
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(person);
+
+    if ((dataa.getContentText()).includes("404")) {
+      sheet.getRange("L13").setValue("API not future enabled");
+      sheet.getRange("L14").setValue("API not future enabled");
+      sheet.getRange("L15").setValue("API not future enabled");
+            
+    } else {
+      var w = JSON.parse(dataa.getContentText());
+      var balance = w[0].balance
+      var availableBalance = w[0].availableBalance
+      //var maxWithdrawAmount = w[0].maxWithdrawAmount
+      //var crossWalletBalance = w[0].crossWalletBalance
+      var crossUnPnl = w[0].crossUnPnl
+      Logger.log(i+person + " Future Balance = " +  balance);
+
+      sheet.getRange("L13").setValue(balance);
+      sheet.getRange("L14").setValue(availableBalance);
+      sheet.getRange("L15").setValue(crossUnPnl);
+      //sheet.getRange("L16").setValue(maxWithdrawAmount);
+      //sheet.getRange("L17").setValue(crossWalletBalance);
+
+    }
+    
+    
+    
+
+  }
+}
+
+
+function APIKEY(name) {
+  var person = name
+  if (name == "Sepehr") {
+    //var key = '7JoWe8FM0s2j3OoMX7s9WrUsUApRVGPlIWwrIal8Maze5vcygBfJMGtEe8FOXqcd'; // old (no future)
+    //var secret = 'c1nmy1SLoAFj2mvvFOdbINVJ8s5M06vCym547xAyPtsTPoBU5dRvTZUmfT3ZXoG2'; // old (no future)
+    var key = 'Mo2HdSjq0i9DCENfPLip931X700UdWetqtIjXw520judLBMJn3I2KTKmUbCHOWLz'; // future)
+    var secret = 'jOc8tDiyVBRT93PIxIDUmDSRlDRctFOgajMenBxG2a3KYFpO5JKnzmRaJyXDWLj4'; // future)
+              
+  } else if (name == "Dara"){
+    var key = 'tYD2siTcIkMeu6LE3KNoADUPopOhKwUAgWzgaTx9MmCQKHk9UZZMT89jm8DlfJSp'; // Please input your key.
+    var secret = '4ba0KZEeqOpIO8nAct7ShJwvx0k9QVyMdqDTPuf7AfQWWqp4tIcFsNN7fwKuhlbj'; // Please input your secret.
+     
+  } else if (name == "Farid"){
+    var key = 'KbsotR2e4wcS5Kgk5eJjghsqhm0VpXaE1oLArc9LriJdSWGV6yiXTw3tGRu8i0LQ'; // Please input your key.
+    var secret = 'EVTGLdaN3xwYaZyLGmIMEWlOfeC6f4oDYoTsQX30kDY493l40Wm1UH5fW2waA4Lp'; // Please input your secret.
+     
+  } else if (name == "Saman"){
+    var key = 'pCA3P3aeC3kbPUQyVNwLOTatZISBG9H3kUnyAsfoOybAZ7C57FQm1WCkrqt8tNFx'; // Please input your key.
+    var secret = 'V3YpEKl1DkmDWiXR6DMK5rR0tyO2NYe7xxU8bnioFswhHbsgNaavxcKnXM9RqhmY'; // Please input your secret.
+       
+  } else if (name == "Faezeh"){
+    var key = 'PYtvX7mVVCcMK5oHEVVdQvvCO3lClkrqYpyMxPMB5XZmVZdG0WBtlUYRqVBTXl8c'; // Please input your key.
+    var secret = 'qdRu71waWNRPWUHAXfujR863kl6pLw1YC7Yx4IHhXYmuuaOxRgKlvxsWAyDlpv8f'; // Please input your secret.
+     
+  } else if (name == "Shirin"){
+    var key = 'clUfkYSjLMwcYG4rTdoZJ1DDGZyybvIDBuDY8zpuC6gOGURZUHCPGsLkdp7Eaywj'; // Please input your key.
+    var secret = 'iHQxEmxZP4EKG9OyBLbd9NuCNPyI5ylgBX67tlZ65FgsSDSKphWLLgijBUfK28Uf'; // Please input your secret.
+  }    
+      
+  return [key,secret]
+}
+
+
+function toast(body, title, timeout) {
+  return SpreadsheetApp.getActive().toast(
+    body,
+    title || "Binance to Google Sheets",
+    timeout || 10 // In seconds
+  );
+}
+
+// Let's all treat those lovely APIs with respect and don't hammer them to hard to avoid bans. This script will do 
+// one single call to Binance to fetch the tickers and dump them in the 'Binance24h' sheet.  - wkr, Moosy Research
+function BINTickFetch(){
+  Logger.log("Function BINTickFetch is running : ........ " )
+  var rows=[],obj_array=null, msg="";
+  try {obj_array=JSON.parse(UrlFetchApp.fetch("https://api.binance.com/api/v3/ticker/price").getContentText());} catch (e) { msg=e; obj_array=null;}
+  if (obj_array!=null){
+    for (r in obj_array) rows.push([obj_array[r].symbol, parseFloat(obj_array[r].price)]);
+    var ss=SpreadsheetApp.getActiveSpreadsheet(),sheet=ss.getSheetByName('Binance24h');ss.getRange("Binance24h!A1").setValue(new Date());
+    try {var range=sheet.getRange(2,1,sheet.getLastRow(),2).clearContent();} catch(e) {Logger.log("error");}
+    if (rows != "") range=sheet.getRange(2,1,rows.length,2); range.setValues(rows); 
+  }
+  if (msg!="") Browser.msgBox("Oops, Binance API did not provide any valid data and returned an error. \\n\\n"+msg);
+}
+ 
