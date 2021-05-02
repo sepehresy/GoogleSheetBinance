@@ -9,26 +9,7 @@
 /**
  * @OnlyCurrentDoc
  */
-function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('CRYPTOFINANCE')
-      .addItem('How to refresh rates', 'ShowRefreshInfo')
-      .addSeparator()
-      .addItem('Set Data Availability plan API Key', 'ShowAPIKeyDataAvaibilityPrompt')
-      .addSeparator()
-      .addItem('Set Historical Data plan API Key', 'ShowAPIKeyHistPlanPrompt')
-      .addSeparator()
-      .addItem('Record now','recordValue')
-      .addSeparator()
-      .addItem('Refresh API','FetchAssets')
-      .addSeparator()
-      .addItem('Refresh Future Balance', 'FetchFuture')
-      .addSeparator()
-      .addItem('Read Data','readRows')
-      .addSeparator()
-      .addItem('Documentation', 'ShowDoc')
-      .addToUi();  
-}
+
 
 /*
 function onOpen() {
@@ -134,9 +115,7 @@ function ShowAPIKeyHistPlanPrompt() {
 function ShowDoc() {
   var ui = SpreadsheetApp.getUi()
   ui.alert("Documentation and Info",
-           'Official website: https://cryptofinance.ai\n\
-            Documentation: https://cryptofinance.ai/docs/\n\
-            Support email: support@cryptofinance.zendesk.com',
+           'Official website: https://sites.google.com/view/joeblack/home',
             ui.ButtonSet.OK)
 }
 
@@ -148,7 +127,7 @@ function ShowDoc() {
 function ShowRefreshInfo() {
   var ui = SpreadsheetApp.getUi()
   ui.alert("How to refresh rates",
-           'We recommend setting up a manual refresh trigger.\nSee the doc at this address for more info:\nhttps://cryptofinance.ai/docs/how-to-refresh-rates/',
+           'to be added .........',
             ui.ButtonSet.OK)
 }
 
