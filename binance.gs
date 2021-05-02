@@ -1692,6 +1692,45 @@ function BinDoOrdersDone() {
 }/**
  * Adds menu items under "Binance" at main menu.
  */
+
+
+
+function BinMenu2(ui) {
+
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('Joe Black')
+      .addItem('How to refresh rates', 'ShowRefreshInfo')
+      .addSeparator()
+      //.addItem('Set Data Availability plan API Key', 'ShowAPIKeyDataAvaibilityPrompt')
+      //.addSeparator()
+      //.addItem('Set Historical Data plan API Key', 'ShowAPIKeyHistPlanPrompt')
+      //.addSeparator()
+      .addItem('Record now','recordValue')
+      .addSeparator()
+      .addItem('Record Binance','PriceSnap')
+      .addSeparator()
+      .addItem('Refresh Assests','FetchAssets')
+      .addSeparator()
+      .addItem('Refresh Future Balance', 'FetchFuture')
+      .addSeparator()
+      .addItem('Read Data','readRows')
+      .addSeparator()
+      .addItem('Documentation', 'ShowDoc')
+      .addToUi();  
+}
+
+
+
+/*********************************************
+ * *******************************************
+ * *******************************************
+ * *******************************************
+ * *******************************************
+ * *******************************************
+ * *******************************************
+ * Adds menu items under "Binance" at main menu.
+ */
+
 function BinMenu(ui) {
   /**
    * Adds the menu items to spreadsheet's main menu
@@ -1730,9 +1769,9 @@ function BinMenu(ui) {
             .addItem("Reset to Defaults", "resetTriggersIntervalConfig"));
       menu.addSeparator()
           .addItem("Credits", "showCredits")
-          .addItem("Donate  =]", "showDonate")
-          .addSeparator()
-          .addItem("Version: "+VERSION, "showVersion");
+          //.addItem("Donate  =]", "showDonate")
+          //.addSeparator()
+          //.addItem("Version: "+VERSION, "showVersion");
     }
     
     menu.addToUi(); // Add menu items to the spreadsheet main menu
@@ -1905,26 +1944,13 @@ function showVersion() {
 function showCredits() {
   const ui = SpreadsheetApp.getUi();
   const title = "Credits - Binance to Google Sheets - "+VERSION;
-  const body = "Diego Manuel - diegomanuel@gmail.com - Argentina\n"+
+  const body = "Joe Black - https://sites.google.com/view/joeblack/home - Canada\n"+
                REPO_URL+"\n"+
                "\n"+
                "\n"+
-               "Diego says: Hello there folks!\n"+
-               "Hope you enjoy this handy tool as it currently is for myself.  =]\n"+
-               "\n"+
-               "Some background: Why this tool had ever to come alive?!\n"+
-               "I needed a way to have Binance data directly available at my Google Spreadsheet.\n"+
-               "First, I've looked for several existing solutions, but none provided me the freedom, confidence and privacy that I want for this kind of delicate stuff.\n"+
-               "It's a requirement for me that requests to Binance go directly from my spreadsheet to its API without any intermediary service in between.\n"+
-               "So I decided to write my own code, all from scratch, with only my will and my javascript knownledge aboard..\n"+
-               "..and I was so happy with the results that I simply decided to share it to the world!\n"+
-               "\n"+
-               "\n"+
-               "I think and hope that many of you will find it as useful as it is for myself.\n"+
-               "\n"+
-               "Enjoy, cheers!";
+               "Sepehr says: Hello there folks!\n";
   ui.alert(title, body, ui.ButtonSet.OK);
-  Logger.log("[Credits] Diego Manuel - diegomanuel@gmail.com - "+REPO_URL);
+  Logger.log("[Credits] Joe Black - https://sites.google.com/view/joeblack/home - "+REPO_URL);
 }
 
 /**
@@ -1932,36 +1958,10 @@ function showCredits() {
  */
 function showDonate() {
   const ui = SpreadsheetApp.getUi();
-  const title = "Donate - Buy me a beer!  =]";
-  const body = "Thank you for using Binance to Google Sheets add-on!\n"+
-               "I really hope you enjoyed and loved it as much as I love to use it everyday.\n"+
-               "\n"+
-               "If your love is strong enough, feel free to share it with me!  =D\n"+
-               "I will much appreciate any contribution and support to keep working on it.\n"+
-               "I have several ideas for new features, so much more could come!\n"+
-               "\n"+
-               "\n"+
-               "You can send any token through the Binance Smart Chain (BSC/BEP20) to:\n"+
-               "0x1d047bc3e46ce0351fd0c44fc2a2029512e87a97\n"+
-               "\n"+
-               "But you can also use:\n"+
-               "[BTC] BTC: 1FsN54WNibhhPhRt4vnAPRGgzaVeeFvEnM\n"+
-               "[BTC] SegWit: bc1qanxn2ycp9em50hj5p7en6wxe962zj4umqvs7q9\n"+
-               "[ETH] ERC20: 0x1d047bc3e46ce0351fd0c44fc2a2029512e87a97\n"+
-               "[LTC] LTC: LZ8URuChzyuuy272isMCrts7R7UKtwnj6a\n"+
-               "\n"+
-               "------------------------------------------------\n"+
-               "Don't you have a Binance account yet?\n"+
-               "Register using the referal link below and get a 10% discount on fees for all your trades!\n"+
-               "https://www.binance.com/en/register?ref=SM93PRAV\n"+
-               "------------------------------------------------\n"+
-               "\n"+
-               "This software was published and released under the GPL-3.0 License.\n"+
-               "\n"+
-               "Use it wisely, happy trading!\n"+
-               "Diego.";
+  const title = "Thanks";
+  const body = "Thank you for using Binance to Google Sheets add-on!";
   ui.alert(title, body, ui.ButtonSet.OK);
-  Logger.log("[Donate] Buy me a beer!  =]");
+  Logger.log("--");
 }
 
 /**
@@ -2147,6 +2147,8 @@ function onOpen(event) {
   }
   const setup = BinSetup();
   BinMenu(SpreadsheetApp.getUi()); // Add items to main menu
+  BinMenu2(SpreadsheetApp.getUi()); // Add items to main menu
+  
   if (setup.isReady()) { // Add-on is ready!
     setup.init();
     BinUtils().toast("Hi there! I'm installed and working at this spreadsheet. Enjoy!  =]");
@@ -3233,8 +3235,8 @@ function BinWallet(OPTIONS) {
  */
 
 let DEBUG = false;
-const VERSION = "v0.5.0";
-const REPO_URL = "https://github.com/diegomanuel/binance-to-google-sheets";
+const VERSION = "v2.0.0";
+const REPO_URL = "https://github.com/sepehresy/GoogleSheetBinance";
 const SPOT_API_URL = "https://api.binance.com";
 const FUTURES_API_URL = "https://fapi.binance.com";
 const TICKER_AGAINST = "USDT";
@@ -3653,6 +3655,7 @@ function BinUtils() {
    */
   function refreshMenu() {
     return BinMenu(SpreadsheetApp.getUi());
+    return BinMenu2(SpreadsheetApp.getUi());
   }
 
   /**
