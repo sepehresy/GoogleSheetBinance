@@ -1,5 +1,5 @@
 var name_list = ["Sepehr","Dara", "Farid" , "Saman", "Faezeh", "Shirin"] 
-//var name_list = ["Saman"] 
+//var name_list = ["Faezeh"] 
 //var name_list = ["Sepehr"] 
 var baseUrl = "https://api.binance.com";
 var baseUrl1 = "https://api1.binance.com";
@@ -7,8 +7,13 @@ var baseUrl2 = "https://api2.binance.com";
 var baseUrl3 = "https://api3.binance.com";
 var baseUrl_future = "https://fapi.binance.com"
 var url = baseUrl
+var Qmainurl = "https://api3.binance.com/api/v1/ticker/price?symbol="
 //FetchAssets()
-
+//FetchFuture()
+var QBTCdataa = UrlFetchApp.fetch(Qmainurl + "BTCUSDT");
+var Qw = JSON.parse(QBTCdataa.getContentText());
+var QBTCUSDTprice = Number(Qw.price)
+Logger.log("BTCUSDT price is:  " + QBTCUSDTprice)
 
 function FetchAssets() {
   SpreadsheetApp.getActive()
@@ -99,7 +104,7 @@ function FetchAssets() {
       var range = sheet.getRange("L10:M12");
       var cell = range.getCell(1, 1);
       if (cell.getValue()){
-        var rangesToClear = ["N2:N19", "O2:O19"];        // enter all range references here
+        var rangesToClear = ["N2:N103", "O2:O103", "P2:P103"];        // enter all range references here
         for (var iii = 0; iii < rangesToClear.length; iii++){
           sheet.getRange(rangesToClear[iii]).clearContent();
         }
@@ -110,11 +115,34 @@ function FetchAssets() {
         var lockedmoney =  Number(genData[iiii].locked)
         var totalmoney = freemoney + lockedmoney
         
-        
         if (((totalmoney) > 0) || (genData[iiii].asset == "USDT")){
-          Logger.log(person + "  "  + iiii + "  " + genData[iiii].asset + "  " + totalmoney)
-          values.push([genData[iiii].asset, totalmoney]);
-          sheet.getRange("N2:O" + (values.length + 1)).setValues(values);  // Added
+          if (genData[iiii].asset == "USDT"){
+            Qprice = 1
+          } else {
+
+            Logger.log(genData[iiii].asset)
+            var Qsymbol = genData[iiii].asset
+            var Qpair = Qsymbol + "USDT"
+            if (genData[iiii].asset != "USDT") 
+
+        
+            try {
+              var Qdataa = UrlFetchApp.fetch(Qmainurl + Qsymbol + "USDT" );
+              var Qw = JSON.parse(Qdataa.getContentText());
+              var Qprice = Qw.price
+            } catch (e) {
+            // Logs an ERROR message.
+              var Qdataa = UrlFetchApp.fetch(Qmainurl +  Qsymbol + "BTC");
+              var Qw = JSON.parse(Qdataa.getContentText());
+              var QBTCprice = Number(Qw.price)
+              var Qprice = QBTCprice * QBTCUSDTprice
+
+              console.error('myFunction() yielded an error: ' + e);
+            }
+          }
+          Logger.log(person + "  "  + iiii + "  " + genData[iiii].asset + "  " + totalmoney +  "  QP:  -->" + Qprice)
+          values.push([genData[iiii].asset, totalmoney,Qprice ]);
+          sheet.getRange("N2:P" + (values.length + 1)).setValues(values);  // Added
           
           if (genData[iiii].asset == "BTC"){
             var cell = sheet.getRange("L7");
@@ -275,18 +303,21 @@ function FetchFuture() {
     */
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(person);
 
-    if ((dataa.getContentText()).includes("404")) {
+    //if ( ((dataa.getContentText()).includes("404")) | ((dataa.getContentText()).includes("msg=Invalid")) ){
+    if  ((dataa.getContentText()).includes("msg")) {
       sheet.getRange("L13").setValue("API not future enabled");
       sheet.getRange("L14").setValue("API not future enabled");
       sheet.getRange("L15").setValue("API not future enabled");
             
     } else {
+      Logger.log(person)
       var w = JSON.parse(dataa.getContentText());
-      var balance = w[0].balance
-      var availableBalance = w[0].availableBalance
+      Logger.log(w)
+      var balance = w[1].balance
+      var availableBalance = w[1].availableBalance
       //var maxWithdrawAmount = w[0].maxWithdrawAmount
       //var crossWalletBalance = w[0].crossWalletBalance
-      var crossUnPnl = w[0].crossUnPnl
+      var crossUnPnl = w[1].crossUnPnl
       Logger.log(i+person + " Future Balance = " +  balance);
 
       sheet.getRange("L13").setValue(balance);
@@ -335,7 +366,6 @@ function APIKEY(name) {
       
   return [key,secret]
 }
-
 
 function toast(body, title, timeout) {
   return SpreadsheetApp.getActive().toast(
